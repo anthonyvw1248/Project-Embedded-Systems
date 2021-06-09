@@ -1,0 +1,183 @@
+#include "mbed.h"
+
+Timer timer;
+
+DigitalOut mlv(D0); //motor_links_voor
+DigitalOut mrv(D1); //motor_rechts_voor
+DigitalOut mla(D2); //motor_links_achter
+DigitalOut mra(D4); //motor_rechts_achter
+
+DigitalIn knop(D5);
+
+DigitalIn echoR(D6);
+DigitalIn trigR(D7);
+DigitalIn echoM(D8);
+DigitalIn trigM(D9);
+DigitalIn echoL(D10);
+DigitalIn trigL(D11);
+
+
+int speed = 40;
+
+enum State { state_wait, state_detecteren, state_vooruit, state_links , state_rechts, state_dubbel_links, state_dubbel_rechts};
+
+int main() {
+
+    State next_state = state_detecteren;
+    State current_state = state_wait;
+    State previous_state;
+
+    while (1) {
+        previous_state = current_state;
+        current_state = next_state;
+
+        switch (current_state) {
+        case state_wait:
+            //Entry_wait-----------------
+            if (previous_state != current_state) {
+
+            }
+            //------------------------
+
+            //Do_wait--------------------
+
+            if (knop == true) {
+
+                next_state = state_detecteren;
+            }
+
+            //------------------------
+
+            //Exit_wait------------------
+            if (next_state != current_state) {
+
+            }
+            //------------------------
+
+            break;
+
+        case state_detecteren:
+            //Entry_detecteren-----------------
+
+            if (previous_state != current_state) {
+
+            }
+            //------------------------
+
+            //Do_detecteren--------------------
+            if (true) {
+                next_state = state_wait;
+            }
+            //------------------------
+
+            //Exit_detecteren------------------
+            if (next_state != current_state) {
+                
+            }
+            //------------------------
+            break;
+
+        case state_vooruit:
+            //Entry_vooruit-----------------
+            if (previous_state != current_state) {
+
+            }
+            //------------------------
+
+            //Do_vooruit--------------------
+            if (true) {
+                next_state = state_wait;
+            }
+            //------------------------
+
+            //Exit_vooruit------------------
+            if (next_state != current_state) {
+
+            }
+            //------------------------
+            break;
+
+        case state_links:
+            //Entry_vooruit-----------------
+            if (previous_state != current_state) {
+
+            }
+            //------------------------
+
+            //Do_vooruit--------------------
+            if (true) {
+                next_state = state_wait;
+            }
+            //------------------------
+
+            //Exit_vooruit------------------
+            if (next_state != current_state) {
+
+            }
+            //------------------------
+            break;
+            
+            case state_rechts:
+            //Entry_rechts-----------------
+            if (previous_state != current_state) {
+
+            }
+            //------------------------
+
+            //Do_rechts--------------------
+            if (true) {
+                next_state = state_wait;
+            }
+            //------------------------
+
+            //Exit_rechts------------------
+            if (next_state != current_state) {
+
+            }
+            //------------------------
+            break;  
+            
+            case state_dubbel_links:
+            //Entry_dubbel_links-----------------
+            if (previous_state != current_state) {
+
+            }
+            //------------------------
+
+            //Do_dubbel_links--------------------
+            if (true) {
+                next_state = state_wait;
+            }
+            //------------------------
+
+            //Exit_dubbel_links------------------
+            if (next_state != current_state) {
+
+            }
+            //------------------------
+            break;
+            
+            case state_dubbel_rechts:
+            //Entry_dubbel_rechts-----------------
+            if (previous_state != current_state) {
+
+            }
+            //------------------------
+
+            //Do_dubbel_rechts--------------------
+            if (true) {
+                next_state = state_wait;
+            }
+            //------------------------
+
+            //Exit_dubbel_rechts------------------
+            if (next_state != current_state) {
+
+            }
+            //------------------------
+            break;    
+                    
+        }
+
+    }
+}
