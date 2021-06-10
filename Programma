@@ -1,13 +1,11 @@
 #include "mbed.h"
 
-Timer timer;
+DigitalOut mlv(D2); //motor_links_voor
+DigitalOut mrv(D3); //motor_rechts_voor
+DigitalOut mla(D4); //motor_links_achter
+DigitalOut mra(D5); //motor_rechts_achter
 
-DigitalOut mlv(D0); //motor_links_voor
-DigitalOut mrv(D1); //motor_rechts_voor
-DigitalOut mla(D2); //motor_links_achter
-DigitalOut mra(D4); //motor_rechts_achter
-
-DigitalIn knop(D5);
+DigitalIn knop(D13);
 
 DigitalIn echoR(D6);
 DigitalIn trigR(D7);
@@ -16,10 +14,11 @@ DigitalIn trigM(D9);
 DigitalIn echoL(D10);
 DigitalIn trigL(D11);
 
+Timer sonar;
 
 int speed = 40;
 
-enum State { state_wait, state_detecteren, state_vooruit, state_links , state_rechts, state_dubbel_links, state_dubbel_rechts};
+enum State { state_wait, state_detecteren, state_vooruit, state_achteruit, state_links , state_rechts, state_dubbel_links, state_dubbel_rechts};
 
 int main() {
 
@@ -28,29 +27,39 @@ int main() {
     State previous_state;
 
     while (1) {
+        
         previous_state = current_state;
         current_state = next_state;
 
         switch (current_state) {
+
         case state_wait:
             //Entry_wait-----------------
             if (previous_state != current_state) {
-
+                printf("entry wait \n\r");
             }
             //------------------------
 
             //Do_wait--------------------
 
-            if (knop == true) {
+            if (true) {
 
-                next_state = state_detecteren;
+                printf("Do wait \n\r");
+
+                if(knop == true){
+                    next_state = state_detecteren;
+                }
+
+                else{
+                next_state = current_state;
+                }
             }
 
             //------------------------
 
             //Exit_wait------------------
             if (next_state != current_state) {
-
+                printf("exit wait \n\r");
             }
             //------------------------
 
@@ -60,19 +69,22 @@ int main() {
             //Entry_detecteren-----------------
 
             if (previous_state != current_state) {
-
+                printf("entry detecteren \n\r");
             }
             //------------------------
 
             //Do_detecteren--------------------
             if (true) {
+                printf("do detecteren \n\r");
+
                 next_state = state_wait;
             }
             //------------------------
 
             //Exit_detecteren------------------
             if (next_state != current_state) {
-                
+                printf("exit detecteren \n\r");
+
             }
             //------------------------
             break;
@@ -80,99 +92,128 @@ int main() {
         case state_vooruit:
             //Entry_vooruit-----------------
             if (previous_state != current_state) {
-
+                printf("entry vooruit \n\r");
             }
             //------------------------
 
             //Do_vooruit--------------------
-            if (true) {
-                next_state = state_wait;
-            }
+
+            if (knop == true) {
+                printf("do vooruit \n\r");
+                next_state = state_detecteren;
+            }   
+
             //------------------------
 
             //Exit_vooruit------------------
             if (next_state != current_state) {
+                printf("exit vooruit \n\r");
+            }
+            //------------------------
 
+            break;
+
+        case state_achteruit:
+            //Entry_achteruit-----------------
+            if (previous_state != current_state) {
+                printf("entry achteruit \n\r");
+            }
+            //------------------------
+
+            //Do_achteruit--------------------
+            if (true) {
+                printf("do achteruit \n\r");
+                next_state = state_wait;
+            }
+            //------------------------
+
+            //Exit_achteruit------------------
+            if (next_state != current_state) {
+                printf("exit achteruit \n\r");
             }
             //------------------------
             break;
 
         case state_links:
-            //Entry_vooruit-----------------
+            //Entry_links-----------------
             if (previous_state != current_state) {
-
+                printf("entry links \n\r");
             }
             //------------------------
 
-            //Do_vooruit--------------------
+            //Do_links--------------------
             if (true) {
+                printf("do links \n\r");
                 next_state = state_wait;
             }
             //------------------------
 
-            //Exit_vooruit------------------
+            //Exit_links------------------
             if (next_state != current_state) {
-
+                printf("exit links \n\r");
             }
             //------------------------
             break;
             
-            case state_rechts:
+        case state_rechts:
             //Entry_rechts-----------------
             if (previous_state != current_state) {
-
-            }
+                printf("entry rechts \n\r");
+            }   
             //------------------------
 
             //Do_rechts--------------------
             if (true) {
+                printf("do rechts \n\r");
                 next_state = state_wait;
             }
             //------------------------
 
             //Exit_rechts------------------
             if (next_state != current_state) {
-
+                printf("exit rechts \n\r");
             }
             //------------------------
             break;  
             
-            case state_dubbel_links:
+        case state_dubbel_links:
             //Entry_dubbel_links-----------------
             if (previous_state != current_state) {
-
+                printf("entry dubbel links \n\r");
             }
             //------------------------
 
             //Do_dubbel_links--------------------
             if (true) {
+                printf("do dubbel links \n\r");
                 next_state = state_wait;
             }
             //------------------------
 
             //Exit_dubbel_links------------------
             if (next_state != current_state) {
-
+                printf("exit dubbel links \n\r");
             }
             //------------------------
             break;
             
-            case state_dubbel_rechts:
+        case state_dubbel_rechts:
             //Entry_dubbel_rechts-----------------
             if (previous_state != current_state) {
-
+                printf("entry dubbel rechts \n\r");
             }
             //------------------------
 
             //Do_dubbel_rechts--------------------
             if (true) {
+                printf("do dubbel rechts \n\r");
                 next_state = state_wait;
             }
             //------------------------
 
             //Exit_dubbel_rechts------------------
             if (next_state != current_state) {
-
+                printf("exit dubbel rechts \n\r");
             }
             //------------------------
             break;    
